@@ -588,6 +588,22 @@ function lunch()
     fi
 
     local product=$(echo -n $selection | sed -e "s/-.*$//")
+
+    # check if container build
+    echo "$product" | grep -qE "_con$"
+    if [ $? -eq 0 ]
+    then 
+        echo 
+	echo "=== Container build for $product ==="
+	echo 
+        export ANDROID_BUILD_TARGET=container
+    else
+       echo 
+       echo "=== Host build for $product ==="
+       echo 
+       export ANDROID_BUILD_TARGET=host
+    fi
+
     TARGET_PRODUCT=$product \
     TARGET_BUILD_VARIANT=$variant \
     build_build_var_cache

@@ -28,7 +28,6 @@ PRODUCT_PACKAGES += \
     CtsShimPrivPrebuilt \
     DownloadProvider \
     ExtShared \
-    ExtServices \
     HTMLViewer \
     MediaProvider \
     PackageInstaller \

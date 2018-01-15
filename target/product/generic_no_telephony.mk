@@ -25,7 +25,6 @@ PRODUCT_PACKAGES := \
     Music \
     MusicFX \
     OneTimeInitializer \
-    Provision \
     SystemUI \
     EasterEgg \
     WallpaperCropper
@@ -34,7 +33,8 @@ PRODUCT_PACKAGES += \
     clatd \
     clatd.conf \
     pppd \
-    screenrecord
+    screenrecord \
+    con-vd
 
 PRODUCT_PACKAGES += \
     librs_jni \

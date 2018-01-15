@@ -44,7 +44,8 @@ _vendor_owner_whitelist := \
         ti \
         trusted_logic \
         verizon \
-        widevine
+        widevine \
+	icl
 
 
 ifneq (,$(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_RESTRICT_VENDOR_FILES))

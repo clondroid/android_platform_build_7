@@ -210,11 +210,15 @@ endif
 # figure out the output directories
 
 ifeq (,$(strip $(OUT_DIR)))
-ifeq (,$(strip $(OUT_DIR_COMMON_BASE)))
-OUT_DIR := $(TOPDIR)out
-else
-OUT_DIR := $(OUT_DIR_COMMON_BASE)/$(notdir $(PWD))
-endif
+    ifeq (,$(strip $(OUT_DIR_COMMON_BASE)))
+        OUT_DIR := $(TOPDIR)out
+    else
+        OUT_DIR := $(OUT_DIR_COMMON_BASE)/$(notdir $(PWD))
+    endif
+
+    ifeq (container,$(strip $(ANDROID_BUILD_TARGET)))
+	OUT_DIR := $(OUT_DIR)_con
+    endif
 endif
 
 DEBUG_OUT_DIR := $(OUT_DIR)/debug

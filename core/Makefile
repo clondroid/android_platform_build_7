@@ -46,6 +46,26 @@ $(foreach cf,$(unique_product_copy_files_pairs), \
 unique_product_copy_files_pairs :=
 unique_product_copy_files_destinations :=
 
+# Install/Copy GMS APK
+unique_product_copy_files_pairs :=
+$(foreach cf,$(GMS_COPY_FILES), \
+    $(if $(filter $(unique_product_copy_files_pairs),$(cf)),,\
+        $(eval unique_product_copy_files_pairs += $(cf))))
+unique_product_copy_files_destinations :=
+$(foreach cf,$(unique_product_copy_files_pairs), \
+    $(eval _src := $(call word-colon,1,$(cf))) \
+    $(eval _dest := $(call word-colon,2,$(cf))) \
+    $(if $(filter $(unique_product_copy_files_destinations),$(_dest)), \
+        $(info GMS_COPY_FILES $(cf) ignored.), \
+        $(eval _fulldest := $(call append-path,$(PRODUCT_OUT),$(_dest))) \
+        $(if $(filter %.xml,$(_dest)),\
+            $(eval $(call copy-xml-file-checked,$(_src),$(_fulldest))),\
+            $(eval $(call copy-one-file,$(_src),$(_fulldest)))) \
+        $(eval ALL_DEFAULT_INSTALLED_MODULES += $(_fulldest)) \
+        $(eval unique_product_copy_files_destinations += $(_dest))))
+unique_product_copy_files_pairs :=
+unique_product_copy_files_destinations :=
+
 # -----------------------------------------------------------------
 # Define rules to copy headers defined in copy_headers.mk
 # If more than one makefile declared a header, print a warning,
@@ -1080,7 +1100,8 @@ INTERNAL_SYSTEMIMAGE_FILES := $(filter $(TARGET_OUT)/%, \
     $(ALL_GENERATED_SOURCES) \
     $(ALL_DEFAULT_INSTALLED_MODULES) \
     $(PDK_FUSION_SYSIMG_FILES) \
-    $(RECOVERY_RESOURCE_ZIP))
+    $(RECOVERY_RESOURCE_ZIP) \
+    odm )
 
 
 FULL_SYSTEMIMAGE_DEPS := $(INTERNAL_SYSTEMIMAGE_FILES) $(INTERNAL_USERIMAGES_DEPS)

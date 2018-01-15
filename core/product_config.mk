@@ -77,6 +77,10 @@ define find-copy-subdir-files
 $(sort $(shell find $(2) -name "$(1)" -type f | $(SED_EXTENDED) "s:($(2)/?(.*)):\\1\\:$(3)/\\2:" | sed "s://:/:g"))
 endef
 
+define find-copy-subdir-files-vendor
+$(sort $(shell find $(2) -name "$(1)" -type f | $(SED_EXTENDED) "s:($(2)/?(.*)):\\1\\:$(3)/\\2\:$(4):" | sed "s://:/:g"))
+endef
+
 # ---------------------------------------------------------------
 
 # These are the valid values of TARGET_BUILD_VARIANT.  Also, if anything else is passed
